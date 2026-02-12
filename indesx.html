@@ -1,32 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Will You Be My Valentine?</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Will You Be My Valentine? 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Comic Sans MS', 'Poppins', cursive;
+      background: pink;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      color: #d10068;
+      margin-bottom: 20px;
+    }
+
+    .photo {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      margin: 20px auto;
+    }
+
+    /* Heart shape for second photo */
+    .heart {
+      clip-path: path("M110 30 C110 0, 0 0, 0 75 C0 150, 110 200, 110 220 C110 200, 220 150, 220 75 C220 0, 110 0, 110 30 Z");
+    }
+
+    button {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    #yesBtn { background: #ff4d88; color: white; }
+    #noBtn { background: #999; color: white; }
+
+    /* Orbiting GIF */
+    .orbit {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      margin: auto;
+    }
+
+    .orbit img.gif {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      top: 50%;
+      left: 50%;
+      transform-origin: -70px -70px;
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg) translate(120px) rotate(0deg); }
+      to { transform: rotate(360deg) translate(120px) rotate(-360deg); }
+    }
+
+    /* Floating hearts & flowers */
+    .float {
+      position: absolute;
+      bottom: -50px;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-110vh); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Background music (plays after YES) -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
 
-<!-- Background Music -->
-<audio id="bgMusic" loop>
-<source src="your-music.mp3" type="audio/mpeg">
-</audio>
+  <div class="container" id="step1">
+    <h1>Will you be my Valentine? 💘</h1>
+    <img src="photo1.jpg" class="photo" alt="First photo" />
+    <div>
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+  </div>
 
+  <div class="container" id="step2" style="display:none;">
+    <h1>Yaaay! 💕</h1>
+    <div class="orbit">
+      <img src="photo2.jpg" class="photo heart" alt="Second photo" />
+      <img src="gif.gif" class="gif" alt="Orbiting gif" />
+    </div>
+  </div>
 
-<h1>Will You Be My Valentine? ❤️</h1>
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
 
+    yesBtn.addEventListener('click', () => {
+      step1.style.display = 'none';
+      step2.style.display = 'block';
+      document.getElementById('bgMusic').play();
+      startFloating();
+    });
+    });
 
-<!-- FIRST PHOTO -->
-<img id="mainPhoto" class="photo" src="first-photo.jpg" alt="First Photo">
+    function startFloating() {
+      setInterval(() => {
+        const el = document.createElement('div');
+        el.className = 'float';
+        el.innerText = Math.random() > 0.5 ? '💖' : '🌸';
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = 4 + Math.random() * 4 + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 7000);
+      }, 400);
+    }
+  </script>
 
-
-<div class="buttons">
-<button class="yes" onclick="sayYes()">Yes 💖</button>
-<button class="no" onmouseover="moveNo(this)">No 😜</button>
-</div>
-
-
-<script src="script.js"></script>
 </body>
 </html>
